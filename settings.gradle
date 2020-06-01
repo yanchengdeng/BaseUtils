@@ -1,0 +1,3 @@
+rootProject.name='BaseUtils'
+include ':app'
+include ':toolsmodule'
