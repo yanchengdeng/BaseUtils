@@ -1,0 +1,8 @@
+批量更改apk文本：
+1.python_batch 文件夹在的内容放置统一个目录下
+2.将已经签好名的 apk放到目录下
+3.定位到 目录下  执行：channel.py batch.apk 命名
+
+问题：
+1. 需要将android sdk 如build_tools 下的28.0.3 下的zipalign_batch.bat 加入系统环境变量
+2.签名包为batch.apk。(注意签名的时候不要打v2 这个选项，生成的apk  会安装不了)

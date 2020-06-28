@@ -16,6 +16,19 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    dataBinding {
+        enabled = true
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("xyzx_0503.jks")
+            storePassword "Ddzx2016...xyzx"
+            keyAlias "xyzx"
+            keyPassword "Ddzx2016...xyzx"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -35,4 +48,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     /** 工具类  **/
     implementation 'com.blankj:utilcode:1.24.7'
+
+    implementation "com.umeng.umsdk:common:9.1.0"
+    implementation  'com.umeng.umsdk:asms:1.1.3' // asms包依赖(必选)
+    implementation 'com.umeng.umsdk:crash:0.0.4' // native crash包依赖(必选)
 }
