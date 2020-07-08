@@ -26,6 +26,9 @@ public class ChannelUtil {
 	private static final String PREF_KEY_CHANNEL_VERSION = "pref_key_channel_version";
 	
 	private static String mChannel;
+
+
+
 	
 	/**
 	 * 返回市场。  如果获取失败返回""
