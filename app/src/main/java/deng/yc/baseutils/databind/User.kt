@@ -13,3 +13,11 @@ data class User(val age: Int,var firstName: String, val lastName: String){
         const val MIN_AGE = 10
     }
 }
+
+
+data class Contact(
+    val id: String,
+    val name: String,
+    val email: String,
+    val phone : String
+)

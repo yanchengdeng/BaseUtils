@@ -69,14 +69,14 @@ class SmsContentObserver constructor(context:Context,handler:Handler) : ContentO
         val cursor = ctx?.contentResolver?.query(mUri!!,null,null,null,sortOrder)
         if (cursor!=null){
             if (cursor.moveToFirst()){
-                val person = cursor.getString(cursor.getColumnIndex(Telephony.Sms.PERSON))
-            val _id = cursor.getString(cursor.getColumnIndex(Telephony.Sms._ID))
-            val phone = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS))
-            val date = cursor.getString(cursor.getColumnIndex(Telephony.Sms.DATE))
-            val subject = cursor.getString(cursor.getColumnIndex(Telephony.Sms.SUBJECT))
-            val smsBody = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY))
-                //status         状态 -1接收，0 complete, 64 pending, 128 failed
-            val status = cursor.getString(cursor.getColumnIndex(Telephony.Sms.STATUS))
+//                val person = cursor.getString(cursor.getColumnIndex(Telephony.Sms.PERSON))
+                val _id = cursor.getString(cursor.getColumnIndex(Telephony.Sms._ID))
+                val phone = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS))
+                val date = cursor.getString(cursor.getColumnIndex(Telephony.Sms.DATE))
+                val subject = cursor.getString(cursor.getColumnIndex(Telephony.Sms.SUBJECT))
+                val smsBody = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY))
+                    //status         状态 -1接收，0 complete, 64 pending, 128 failed
+                val status = cursor.getString(cursor.getColumnIndex(Telephony.Sms.STATUS))
 
                 /**
                  * type
@@ -89,12 +89,15 @@ class SmsContentObserver constructor(context:Context,handler:Handler) : ContentO
                 QUEUED = 6;
                  */
                 val type = cursor.getString(cursor.getColumnIndex(Telephony.Sms.TYPE))
-            val dateString = TimeUtils.millis2String(date.toLong(),"yyyy-MM-dd HH:mm:ss")
+                val dateString = TimeUtils.millis2String(date.toLong(),"yyyy-MM-dd HH:mm:ss")
+
+                //persion  为空 有两种形式  0  null
+
 
                 cursor.close()
                 if (msg_id != _id){
                     msg_id = _id
-                    LogUtils.d("dyc","person = $person   消息类型 =$type: _id = $_id  状态：$status  手机：$phone : 日期：$dateString : 标题 ：$subject : 消息体：$smsBody")
+                    LogUtils.d("dyc","   消息类型 =$type: _id = $_id  状态：$status  手机：$phone : 日期：$dateString : 标题 ：$subject : 消息体：$smsBody")
                 }else{
                     LogUtils.d("dyc","重复数据msg_id = $msg_id")
                     return

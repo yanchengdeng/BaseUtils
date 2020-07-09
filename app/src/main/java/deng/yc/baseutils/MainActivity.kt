@@ -1,10 +1,13 @@
 package deng.yc.baseutils
 
 import android.Manifest
+import android.content.ContentResolver
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.provider.ContactsContract
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -18,6 +21,7 @@ import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.utils.UMUtils
 import deng.yc.baseutils.databind.DataBindActivity
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,10 +67,11 @@ class MainActivity : AppCompatActivity() {
 
         val permissions = RxPermissions(this)
         permissions
-            .request(Manifest.permission.READ_SMS)
+            .request(Manifest.permission.READ_SMS,Manifest.permission.READ_CONTACTS)
             .subscribe({ granted ->
                 if (granted) {
                     ToastUtils.showShort("已授权")
+                    getPhoneInfo()
                 } else {
                    ToastUtils.showShort("请授权")
                 }
@@ -98,6 +103,12 @@ class MainActivity : AppCompatActivity() {
             ToastUtils.showShort("启动")
         }
 
+
+
+    }
+
+    private fun  getPhoneInfo(){
+        QueryContactUtils.testContactNameByNumber(this)
     }
 
 
