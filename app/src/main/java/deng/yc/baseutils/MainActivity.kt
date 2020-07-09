@@ -128,5 +128,27 @@ class MainActivity : AppCompatActivity() {
             ToastUtils.showShort("关闭啦。。。")
         }
     }
+
+    override fun onBackPressed() {
+       doubleClickExist()
+    }
+
+    private var mExitTime: Long = 0
+
+    /****
+     * 连续两次点击退出
+     */
+    private fun doubleClickExist(): Boolean {
+        if (System.currentTimeMillis() - mExitTime > 2000) {
+            ToastUtils.showShort(R.string.double_click_exit)
+            mExitTime = System.currentTimeMillis()
+            return true
+        } else {
+            ActivityUtils.finishAllActivities()
+        }
+        return false
+    }
+
+
 }
 

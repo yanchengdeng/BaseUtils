@@ -7,6 +7,7 @@ import android.os.Handler
 import android.provider.Telephony
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.TimeUtils
+import com.blankj.utilcode.util.ToastUtils
 
 
 /**
@@ -20,12 +21,17 @@ class SmsContentObserver constructor(context:Context,handler:Handler) : ContentO
     private val ctx: Context? = context
     private val sortOrder: String? = Telephony.Sms.DATE+" desc"
 
+    private var msg_id = "0"
+
     private var mUri: Uri? = null
 //    private val address = "10001" // 发送短信地址
 
 
+    /**
+     * 双卡双待  调用两次
+     */
     override fun onChange(selfChange: Boolean, uri: Uri?) {
-//        super.onChange(selfChange, uri)
+        super.onChange(selfChange, uri)
         /**
          * // 第一遍 先执行 content://sms/raw
         // 第二遍则是 content://sms/inbox
@@ -35,7 +41,7 @@ class SmsContentObserver constructor(context:Context,handler:Handler) : ContentO
         }
          */
 
-        LogUtils.d( "dyc. selfChange222222222222222222=" + selfChange + ", uri=" + uri)
+        LogUtils.d( "dyc. onChange=" + selfChange + ", uri=" + uri)
         /**
          * 适配某些较旧的设备，可能只会触发onChange(boolean selfChange)方法，没有传回uri参数，
          * 此时只能通过"content://sms/inbox"来查询短信
@@ -53,7 +59,7 @@ class SmsContentObserver constructor(context:Context,handler:Handler) : ContentO
          */
 
 
-        mUri = uri ?:  Uri.parse("content://sms/inbox")
+        mUri = uri ?:  Uri.parse(smsInboxUri)
 
         if (mUri.toString().contains("content://sms/raw") || mUri.toString() == "content://sms") {
             return
@@ -69,11 +75,30 @@ class SmsContentObserver constructor(context:Context,handler:Handler) : ContentO
             val date = cursor.getString(cursor.getColumnIndex(Telephony.Sms.DATE))
             val subject = cursor.getString(cursor.getColumnIndex(Telephony.Sms.SUBJECT))
             val smsBody = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY))
+                //status         状态 -1接收，0 complete, 64 pending, 128 failed
             val status = cursor.getString(cursor.getColumnIndex(Telephony.Sms.STATUS))
+
+                /**
+                 * type
+                ALL    = 0;
+                INBOX  = 1;
+                SENT   = 2;
+                DRAFT  = 3;
+                OUTBOX = 4;
+                FAILED = 5;
+                QUEUED = 6;
+                 */
+                val type = cursor.getString(cursor.getColumnIndex(Telephony.Sms.TYPE))
             val dateString = TimeUtils.millis2String(date.toLong(),"yyyy-MM-dd HH:mm:ss")
-            LogUtils.d("dyc","person = $person : _id = $_id  状态：$status")
-            LogUtils.d("dyc","手机：$phone : 日期：$dateString : 标题 ：$subject : 消息体：$smsBody")
+
                 cursor.close()
+                if (msg_id != _id){
+                    msg_id = _id
+                    LogUtils.d("dyc","person = $person   消息类型 =$type: _id = $_id  状态：$status  手机：$phone : 日期：$dateString : 标题 ：$subject : 消息体：$smsBody")
+                }else{
+                    LogUtils.d("dyc","重复数据msg_id = $msg_id")
+                    return
+                }
             }
         }
 
@@ -81,27 +106,19 @@ class SmsContentObserver constructor(context:Context,handler:Handler) : ContentO
     }
 
 //    override fun onChange(selfChange: Boolean) {
+//
 //        super.onChange(selfChange)
-//        LogUtils.d("dyc selfChange111111111111111=" + selfChange);
-//        onChange(selfChange, null)
-
-
-//        var uri = Uri.parse(smsInboxUri)
-//        val cursor = ctx?.contentResolver?.query(uri,null,null,null,sortOrder)
-//        if (cursor?.moveToFirst()!!){
-//            val person = cursor.getString(cursor.getColumnIndex(Telephony.Sms.PERSON))
-//            val _id = cursor.getString(cursor.getColumnIndex(Telephony.Sms._ID))
-//            val phone = cursor.getString(cursor.getColumnIndex(Telephony.Sms.ADDRESS))
-//            val date = cursor.getString(cursor.getColumnIndex(Telephony.Sms.DATE))
-//            val subject = cursor.getString(cursor.getColumnIndex(Telephony.Sms.SUBJECT))
-//            val smsBody = cursor.getString(cursor.getColumnIndex(Telephony.Sms.BODY))
-//            val status = cursor.getString(cursor.getColumnIndex(Telephony.Sms.STATUS))
-//            val dateString = TimeUtils.millis2String(date.toLong(),"yyyy-MM-dd HH:mm:ss")
-//            LogUtils.d("dyc","person = $person : _id = $_id  状态：$status")
-//            LogUtils.d("dyc","手机：$phone : 日期：$dateString : 标题 ：$subject : 消息体：$smsBody")
-//        }
-
-
-
+//        LogUtils.d("dyc","onChange 发生了")
+//
+//
 //    }
+
+//    override fun deliverSelfNotifications(): Boolean {
+//        return true
+//    }
+
+
+
+
+
 }

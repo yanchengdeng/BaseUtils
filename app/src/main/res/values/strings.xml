@@ -4,4 +4,5 @@
     <string name="title_videomodule">videomodle</string>
     <string name="data_bind">数据绑定</string>
     <string name="thread_annotation">线程注解</string>
+    <string name="double_click_exit">再点一次退出</string>
 </resources>
