@@ -1,13 +1,11 @@
 package deng.yc.baseutils
 
 import android.Manifest
-import android.content.ContentResolver
-import android.database.Cursor
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.provider.ContactsContract
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -43,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     })
 
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -68,18 +67,14 @@ class MainActivity : AppCompatActivity() {
         val permissions = RxPermissions(this)
         permissions
             .request(Manifest.permission.READ_SMS,Manifest.permission.READ_CONTACTS)
-            .subscribe({ granted ->
+            .subscribe { granted ->
                 if (granted) {
                     ToastUtils.showShort("已授权")
                     getPhoneInfo()
                 } else {
-                   ToastUtils.showShort("请授权")
+                    ToastUtils.showShort("请授权")
                 }
-            })
-
-
-
-
+            }
 
 
 
@@ -104,6 +99,8 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        testRsa()
+
 
     }
 
@@ -111,6 +108,24 @@ class MainActivity : AppCompatActivity() {
         QueryContactUtils.testContactNameByNumber(this)
     }
 
+
+    private fun testRsa(){
+        // 生成公钥和私钥
+//        Test.genKeyPair()
+        // 加密字符串
+        // 加密字符串
+        val message = "df723820"
+        var messageEn =
+            Test.encrypt(message, Test.publicKeyString)
+        LogUtils.w("dyc","$message\t加密后的字符串为:$messageEn")
+
+        messageEn = "aDkDcLYZXTRh9WwJfoziJl1S2KodS/08A+LybrNZUMEO8meLIdR1UgWFbnu7btv0WghJuM64BkNg97pCrqDv2Pq4n0Q/gSxYthMN+6O+U6bXxxF+Gtt8AKMzfPt8hvz8KJ/oFCZ/ZoUBLqsDucxCjvB9rAgf3lh7Jf9O+Kv+Tcs="
+
+        messageEn = "TOidpgZbr32AQLM2jRLJDeAGdj8gLPWMjT/HMc0/jXIS4Ge38o/1rnrVHqK5uTJEX8owyM6KkkCuR16uXySRc1chmzDusPQCVjEXBRohYL7SNsaHFsqsocyzspAcI7dwUg1QgtvtfH9UDZvSaPPRNwyPWIng5FCIDg+/ncO+d2k="
+        val messageDe =
+            Test.decrypt(messageEn, Test.privateKeyString)
+        LogUtils.w("dyc","还原后的字符串为:$messageDe")
+    }
 
 
     @MainThread
