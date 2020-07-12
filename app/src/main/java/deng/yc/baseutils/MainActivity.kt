@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Base64
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -55,7 +56,10 @@ class MainActivity : AppCompatActivity() {
 
 
         thread_annotation.setOnClickListener {
-            testThread()
+//            testThread()
+//            testRsa()
+
+            testRsa1()
         }
 
 
@@ -99,9 +103,47 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        testRsa()
 
 
+
+    }
+
+    private fun testRsa1() {
+
+        val rsa = Rsa()
+        var str = "我要加密这段文字。"
+        println("原文:" + "我要加密这段文字。")
+        var crypt = rsa.encryptByPrivateKey(str)
+        println("私钥加密密文:$crypt")
+        var result = rsa.decryptByPublicKey(crypt)
+        println("原文:$result")
+
+        println("---")
+
+        str = "我要加密这段文字。"
+        println("原文:" + "我要加密这段文字。")
+        crypt = rsa.encryptByPublicKey(str)
+
+        val base64Strencode = String(Base64.encode(crypt.toByteArray(), Base64.DEFAULT))
+
+        println("公钥加密密文base64加密  :$base64Strencode")
+        val base64Strdecode =  Base64.decode(base64Strencode, Base64.DEFAULT)
+        println("公钥加密密文再base64解密  :${String(base64Strdecode)}")
+        println("公钥加密密文:$crypt")
+        result = rsa.decryptByPrivateKey(String(base64Strdecode))
+        println("原文:$result")
+
+        println("---")
+
+        str = "我要签名这段文字。"
+        println("原文：$str")
+        val str1 = rsa.signByPrivateKey(str)
+        println("签名结果：$str1")
+        if (rsa.verifyByPublicKey(str1, str)) {
+            println("成功")
+        } else {
+            println("失败")
+        }
     }
 
     private fun  getPhoneInfo(){
@@ -119,9 +161,12 @@ class MainActivity : AppCompatActivity() {
             Test.encrypt(message, Test.publicKeyString)
         LogUtils.w("dyc","$message\t加密后的字符串为:$messageEn")
 
-        messageEn = "aDkDcLYZXTRh9WwJfoziJl1S2KodS/08A+LybrNZUMEO8meLIdR1UgWFbnu7btv0WghJuM64BkNg97pCrqDv2Pq4n0Q/gSxYthMN+6O+U6bXxxF+Gtt8AKMzfPt8hvz8KJ/oFCZ/ZoUBLqsDucxCjvB9rAgf3lh7Jf9O+Kv+Tcs="
 
-        messageEn = "TOidpgZbr32AQLM2jRLJDeAGdj8gLPWMjT/HMc0/jXIS4Ge38o/1rnrVHqK5uTJEX8owyM6KkkCuR16uXySRc1chmzDusPQCVjEXBRohYL7SNsaHFsqsocyzspAcI7dwUg1QgtvtfH9UDZvSaPPRNwyPWIng5FCIDg+/ncO+d2k="
+
+        val base64En = Test.base64Encode(messageEn)
+        LogUtils.w("dyc","base64加密后："+base64En)
+        val base64DE = Test.base64decode(base64En)
+        LogUtils.w("dyc","base64解密后密后："+base64DE)
         val messageDe =
             Test.decrypt(messageEn, Test.privateKeyString)
         LogUtils.w("dyc","还原后的字符串为:$messageDe")

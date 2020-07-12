@@ -13,7 +13,8 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import org.apache.commons.codec.binary.Base64;
- 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import javax.crypto.Cipher;
  
 
@@ -21,24 +22,24 @@ public class Test {
  
 
     //公钥加密
-    public static String publicKeyString = "MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgGxNapCU54dA1dA2OENqrWYhEntU\n" +
-            "nYp9qGvqT39WjTL1Zf2yGFUmTaNnQ2EeByFmPotI2Ux+pfKnbSxY7hIPSZtkatsi\n" +
-            "5LCUPklvKnrCb+qrv1bc8tLI8CjpFmCKstsSUWVf6as5mo3C8y015ey2vevd6C/g\n" +
-            "fIUCTvEwBk+T9LMhAgMBAAE=";
+    public static String publicKeyString = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQiFQ68jaoj9gWgo8JN9bFVaiA\n" +
+            "jpfEJ/mCalMpnRYcqwNM0JNpqLpCAY4uoFd2cP8c3yqZbh8e3+nkDHOGnndeaGO/\n" +
+            "284uIuLlwNxnYT+/EJdcaB9z8UR2tLSzeH4EXce3VfT8h2GzcoVj1OdT4kPvr9VG\n" +
+            "VgpVhgW4YUriyxZWxQIDAQAB";
     //私钥解密
-    public  static String privateKeyString = "MIICWgIBAAKBgGxNapCU54dA1dA2OENqrWYhEntUnYp9qGvqT39WjTL1Zf2yGFUm\n" +
-            "TaNnQ2EeByFmPotI2Ux+pfKnbSxY7hIPSZtkatsi5LCUPklvKnrCb+qrv1bc8tLI\n" +
-            "8CjpFmCKstsSUWVf6as5mo3C8y015ey2vevd6C/gfIUCTvEwBk+T9LMhAgMBAAEC\n" +
-            "gYBkD6qzZj/7oJVrR4z4DKmkQE4ZEHZ1q99dxSAp4EeYm03d9RuyIC9/FzsTkXC5\n" +
-            "FQQYH/hUSnb8GGAvpwJeQS2ZXfjFX0FpgCIVBWVt06n0zkRe5Wre79G0zZtIw6Cb\n" +
-            "npRmxWM4rDwpZ90sBrNcLvjdMJJ94iCC8HJ9qFDpOdwgAQJBANL4ODwGs4XrXNKV\n" +
-            "ffJ/VcYlTWQBqe0Nuo8IIUY4i//wN5uLJGiuKY0hWpCbK8X2Zugbv6Zrp3BZ/pjw\n" +
-            "pLrDw6ECQQCDa0QAhM9p0VNRebiG4eRSS9umtuFt/5WHz0q/I/yQNem/1Bia8Brl\n" +
-            "7TQIKyRfA3QcLlAGQWFoxVuZgCdKGr+BAkBxUYbTJz5SlqObMVUfZioqbmrtZr9h\n" +
-            "Z1hn75P/5eu9I8iasdhyqeoDtoCw38hZYwrPbeg5eeXMQWqxt8Cj2PdBAkAH44J7\n" +
-            "fX1t3rDfrSzUe+7WudL/mO7DSZpSQrE79A8PIQ1dBIBNnKggsTJ0YxKV2YE4x9bp\n" +
-            "6TbNsTskZbr2CdEBAkBtnWP+LvesVgZFpNwGJNLuBIbyflEOQTbeqaxzQeMKJ9D/\n" +
-            "+A2jnFtpJzouFwLCUSGoUQjnA9Yw+ydX9cqOg6LK";
+    public  static String privateKeyString = "MIICXQIBAAKBgQDQiFQ68jaoj9gWgo8JN9bFVaiAjpfEJ/mCalMpnRYcqwNM0JNp\n" +
+            "qLpCAY4uoFd2cP8c3yqZbh8e3+nkDHOGnndeaGO/284uIuLlwNxnYT+/EJdcaB9z\n" +
+            "8UR2tLSzeH4EXce3VfT8h2GzcoVj1OdT4kPvr9VGVgpVhgW4YUriyxZWxQIDAQAB\n" +
+            "AoGAIVsdNgyWZ6ISq48YuB3BcfFAscedSRgn1g+R298vsUg9j+TxH36IxJQhHR4y\n" +
+            "v1RVylV8J+ywd6zTadIADLF+YEaWc+mmo+wfE13F9aZj/enxb6nuUWJqPsg6Rqby\n" +
+            "In5gp9SomNZaYkxTQTCWPd/MkMugZC5YTZe5s1CwTPBkjoECQQDvKgxX1DuP6vgv\n" +
+            "WPz7rO3yD+tE2iUtDiFRQKd8o32pes9BzDTgRv3uN8zoub3JiQvRSKvDFWJFqoQ0\n" +
+            "mkYujlDhAkEA3zZFKCRNmFdNcmsIm8u1jNPvv8H3cf9bs6xWx0HQatDFqaBtnZlv\n" +
+            "fGbaJ/Lqwu4cGuNAnYsjQunLR3CQ32guZQJBAIiqlIcT5j1lXhFgXqBKv2YVprGf\n" +
+            "nqLSckOGGK9mlYZlgU3uLUEEEFMyW8uZaFRkFfav+kbuT0vUFtwgVH6CIMECQQDR\n" +
+            "2qUUQ2VMd6/Rhb23M8NBXrRF9aedXrYpazq+5Sp8ckGT48eK5wmAzPYHnwOGNvTn\n" +
+            "doZ2V6zUKRg71yHtWHZdAkByvOFMw9Oq3jKyXS0sFz07XVsuQ+sGpVVwLl1A5n45\n" +
+            "GNu5kD/3UE1EJrFXUEVVWPuvGKR2rCMYRRRAqliQgcyh";
  
 //    public static void main(String[] args) throws Exception {
 //        // TODO Auto-generated method stub
@@ -86,10 +87,10 @@ public class Test {
     public static String encrypt(String str, String publicKey) throws Exception {
         // base64编码的公钥
         byte[] decoded = Base64.decodeBase64(publicKey);
-        RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA")
+        RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA", new BouncyCastleProvider())
                 .generatePublic(new X509EncodedKeySpec(decoded));
         // RSA加密
-        Cipher cipher = Cipher.getInstance("RSA");
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         cipher.init(Cipher.ENCRYPT_MODE, pubKey);
         String outStr = Base64.encodeBase64String(cipher.doFinal(str.getBytes("UTF-8")));
         return outStr;
@@ -100,13 +101,22 @@ public class Test {
         byte[] inputByte = Base64.decodeBase64(str.getBytes("UTF-8"));
         // base64编码的私钥
         byte[] decoded = Base64.decodeBase64(privateKey);
-        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA")
+        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA", new BouncyCastleProvider())
                 .generatePrivate(new PKCS8EncodedKeySpec(decoded));
         // RSA解密
-        Cipher cipher = Cipher.getInstance("RSA");
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         cipher.init(Cipher.DECRYPT_MODE, priKey);
         String outStr = new String(cipher.doFinal(inputByte));
         return outStr;
+    }
+
+
+    public static String base64Encode(String str){
+      return   new String(Base64.encodeBase64(str.getBytes()));
+    }
+
+    public static String base64decode(String str){
+        return   new String(Base64.decodeBase64(str.getBytes()));
     }
  
 }

@@ -18,8 +18,8 @@ import com.blankj.utilcode.util.ToastUtils
  **/
 class SmsContentObserver constructor(context:Context,handler:Handler) : ContentObserver(handler){
     private val smsInboxUri = "content://sms/inbox"
-    private val ctx: Context? = context
-    private val sortOrder: String? = Telephony.Sms.DATE+" desc"
+    private val ctx: Context = context
+    private val sortOrder: String = Telephony.Sms.DATE+" desc"
 
     private var msg_id = "0"
 
