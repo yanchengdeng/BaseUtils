@@ -2,6 +2,8 @@ package deng.yc.baseutils
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.res.AssetManager
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -20,6 +22,7 @@ import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.utils.UMUtils
 import deng.yc.baseutils.databind.DataBindActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -63,6 +66,26 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        play_mp3.setOnClickListener {
+
+            var player = MediaPlayer()
+            val assetManager: AssetManager = assets
+//            try {
+                val fileDescriptor =
+                    assetManager.openFd("mongo.mp3")
+                player.setDataSource(
+                    fileDescriptor.fileDescriptor,
+                    fileDescriptor.startOffset,
+                    fileDescriptor.length
+                )
+                player.prepare()
+                player.start()
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//            }
+
+        }
+
         var channel = ChannelUtil.getChannel(this, "未知")
 
         bind_data.text = channel
@@ -80,13 +103,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-
-
         webview.loadUrl(DataUrl.datas[channel])
-
-
-
-
         webview.webViewClient = object : WebViewClient(){
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
