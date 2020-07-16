@@ -3,6 +3,7 @@ package deng.yc.baseutils
 import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
+import deng.yc.baseutils.kolin.StaticClass
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -19,17 +20,8 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun encode(){
-        val password = "123456"
-      val  passwordEncode =   EncodeUtils.base64Encode(password)
-
-//        LogUtils.w("123456加密后 : $passwordEncode")
-        System.out.println("123456加密后 : $passwordEncode")
-
-        val passwordDecode = EncodeUtils.base64Decode(passwordEncode)
-
-        System.out.println("123456解密后 : $passwordEncode")
-
-        assertEquals("123456",passwordDecode)
+    fun test_static_kotlin(){
+        StaticClass.doWork()
+        StaticClass.doWork1()
     }
 }

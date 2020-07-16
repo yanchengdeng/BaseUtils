@@ -5,4 +5,18 @@
     <string name="data_bind">数据绑定</string>
     <string name="thread_annotation">线程注解</string>
     <string name="double_click_exit">再点一次退出</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="plant_detail_image_content_description"><![CDATA[深圳、香港和新加坡在经济总量和经济增长率上是深圳>新加坡>香港，人口为深圳>香港>新加坡，因此人均GDP实际上是新加坡>香港>深圳。值得注意的是深圳尽管是新兴城市，四十年前仅有几万人口，但是由于自身快速的发展，吸引了大量的人口流入，目前已经拥有了1300多万的常住人口，比香港的700多万，新加坡的500多万要多出两倍左右]]></string>
+    <string name="menu_item_share_plant">分享</string>
+    <string name="watering_needs_prefix">这么看来深圳拥有最高的人口，实际上深圳的面积也是最大的拥有1900平方公里，香港是1100多平方公里，而新加坡700多平方公里，因此三者的人口密度可能相差无几，不过相对的深圳受到的国际影响也最低，因此第二波的疫情暂时未对深圳造成影响，已经连续2个多月没有出现新增确诊病例。</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

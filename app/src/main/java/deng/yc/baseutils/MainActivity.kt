@@ -21,6 +21,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.utils.UMUtils
 import deng.yc.baseutils.databind.DataBindActivity
+import deng.yc.baseutils.livedata.LiveDataActivity
+import deng.yc.baseutils.viewbind.ViewBindActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 
@@ -59,10 +61,7 @@ class MainActivity : AppCompatActivity() {
 
 
         thread_annotation.setOnClickListener {
-//            testThread()
-//            testRsa()
-
-            testRsa1()
+            testThread()
         }
 
 
@@ -70,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
             var player = MediaPlayer()
             val assetManager: AssetManager = assets
-//            try {
+            try {
                 val fileDescriptor =
                     assetManager.openFd("mongo.mp3")
                 player.setDataSource(
@@ -80,15 +79,34 @@ class MainActivity : AppCompatActivity() {
                 )
                 player.prepare()
                 player.start()
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//            }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
 
         }
 
+
+        view_bind.setOnClickListener {
+            ActivityUtils.startActivity(ViewBindActivity::class.java)
+        }
+
+
+
+
+        live_data.setOnClickListener {
+            ActivityUtils.startActivity(LiveDataActivity::class.java)
+        }
+
+
+        immersion.setOnClickListener {
+            ActivityUtils.startActivity(TransTopActivity::class.java)
+        }
+
+
+
         var channel = ChannelUtil.getChannel(this, "未知")
 
-        bind_data.text = channel
+//        bind_data.text = channel
         UMUtils.setChannel(this,channel)
 
         val permissions = RxPermissions(this)
@@ -103,15 +121,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        webview.loadUrl(DataUrl.datas[channel])
-        webview.webViewClient = object : WebViewClient(){
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                return false
-            }
-        }
 
         smsContentObserver = SmsContentObserver(this,handler = myHandler)
         smsContentObserver?.let {

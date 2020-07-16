@@ -40,10 +40,34 @@
             android:text="播放音频" />
 
 
-        <WebView
-            android:id="@+id/webview"
+
+        <Button
+            android:id="@+id/view_bind"
             android:layout_width="match_parent"
-            android:layout_height="500dp"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="视图绑定" />
+
+
+        <Button
+        android:id="@+id/live_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="LiveData_demo" />
+
+
+        <Button
+            android:id="@+id/immersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="沉浸式体验" />
+
+
 
     </LinearLayout>
 
