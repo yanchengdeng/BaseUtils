@@ -3,7 +3,6 @@ package deng.yc.baseutils
 import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
-import deng.yc.baseutils.kolin.StaticClass
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -21,7 +20,5 @@ class ExampleUnitTest {
 
     @Test
     fun test_static_kotlin(){
-        StaticClass.doWork()
-        StaticClass.doWork1()
     }
 }

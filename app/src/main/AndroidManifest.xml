@@ -19,11 +19,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".coroutine.CoroutineActivity"></activity>
         <activity
             android:name=".MainActivity2"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".TransTopActivity" android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TransTopActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".livedata.LiveDataActivity" />
         <activity android:name=".viewbind.ViewBindActivity" />
         <activity android:name=".databind.DataBindActivity" />

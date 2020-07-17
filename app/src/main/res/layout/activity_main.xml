@@ -68,6 +68,15 @@
             android:text="沉浸式体验" />
 
 
+        <Button
+            android:id="@+id/corouter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="协程合并  协程关闭" />
+
+
 
     </LinearLayout>
 

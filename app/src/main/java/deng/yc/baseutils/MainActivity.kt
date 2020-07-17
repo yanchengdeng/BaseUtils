@@ -20,6 +20,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.utils.UMUtils
+import deng.yc.baseutils.coroutine.CoroutineActivity
 import deng.yc.baseutils.databind.DataBindActivity
 import deng.yc.baseutils.livedata.LiveDataActivity
 import deng.yc.baseutils.viewbind.ViewBindActivity
@@ -102,6 +103,10 @@ class MainActivity : AppCompatActivity() {
             ActivityUtils.startActivity(TransTopActivity::class.java)
         }
 
+
+        corouter.setOnClickListener {
+            ActivityUtils.startActivity(CoroutineActivity::class.java)
+        }
 
 
         var channel = ChannelUtil.getChannel(this, "未知")

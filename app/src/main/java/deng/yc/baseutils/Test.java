@@ -3,6 +3,9 @@ package deng.yc.baseutils;
 
 import com.blankj.utilcode.util.LogUtils;
 
+import org.apache.commons.codec.binary.Base64;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -12,8 +15,6 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import org.apache.commons.codec.binary.Base64;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
  
@@ -95,11 +96,14 @@ public class Test {
         String outStr = Base64.encodeBase64String(cipher.doFinal(str.getBytes("UTF-8")));
         return outStr;
     }
- 
+
+
     public static String decrypt(String str, String privateKey) throws Exception {
         // 64位解码加密后的字符串
         byte[] inputByte = Base64.decodeBase64(str.getBytes("UTF-8"));
         // base64编码的私钥
+
+
         byte[] decoded = Base64.decodeBase64(privateKey);
         RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA", new BouncyCastleProvider())
                 .generatePrivate(new PKCS8EncodedKeySpec(decoded));
@@ -115,8 +119,20 @@ public class Test {
       return   new String(Base64.encodeBase64(str.getBytes()));
     }
 
-    public static String base64decode(String str){
-        return   new String(Base64.decodeBase64(str.getBytes()));
+
+public static String base64decode(String str){ return   new String(Base64.decodeBase64(str.getBytes())); }
+
+    public static void doMethod(String str, String privateKey) throws Exception{
+        // 64位解码加密后的字符串
+        byte[] inputByte = Base64.decodeBase64(str.getBytes("UTF-8"));
+        // base64编码的私钥
+        byte[] decoded = Base64.decodeBase64(privateKey);
+        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA", new BouncyCastleProvider())
+                .generatePrivate(new PKCS8EncodedKeySpec(decoded));
+        // RSA解密
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipher.init(Cipher.DECRYPT_MODE, priKey);
+        String outStr = new String(cipher.doFinal(inputByte));
     }
  
 }
