@@ -32,7 +32,7 @@ class LiveDataActivity : AppCompatActivity() {
         setContentView(R.layout.activity_live_data)
 
         val nameObserver = Observer<String>{
-            tv_name.text = it
+            tv_name.text = it.toString()
 
         }
 
@@ -41,7 +41,10 @@ class LiveDataActivity : AppCompatActivity() {
 
 
         btn_click.setOnClickListener {
-            model.currentName.postValue( Random(100000).toString())
+            val datas = (Math.random()*1000).toInt().toString()
+            model.currentName.postValue(datas )
+
+            tv_contents.text = model.currentName.value
         }
     }
 

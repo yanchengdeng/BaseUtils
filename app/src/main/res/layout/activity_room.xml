@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".room.RoomActivity">
+
+
+    <Button
+    android:id="@+id/add_record"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="添加一条记录"
+    android:layout_margin="20dp" />
+
+
+
+
+    <Button
+        android:id="@+id/find_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查找一条记录"
+        android:layout_margin="20dp"  />
+
+
+
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="请输入查找的用户名" />
+
+
+
+    <Button
+        android:id="@+id/delete_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="删除所有记录"
+        android:layout_margin="20dp" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+    <TextView
+        android:id="@+id/tv_contents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="200dp"
+        android:background="@android:drawable/editbox_dropdown_light_frame"
+        android:text="数据内容"
+       />
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

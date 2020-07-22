@@ -7,7 +7,7 @@ package deng.yc.baseutils.databind
  *@Describe ：
  **/
 
-data class User(val age: Int,var firstName: String, val lastName: String){
+data class User(var age: Int,var firstName: String, val lastName: String){
     companion object{
         const val MAX_AGE  = 14
         const val MIN_AGE = 10

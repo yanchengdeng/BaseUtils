@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.blankj.utilcode.util.ThreadUtils
 import deng.yc.baseutils.R
 import deng.yc.baseutils.databinding.ActivityDataBindBinding
+import kotlinx.android.synthetic.main.activity_data_bind.*
+import kotlin.random.Random
 
 /**
 *@author : yanc -> 大道之行
@@ -20,6 +23,11 @@ class DataBindActivity : AppCompatActivity() {
             this, R.layout.activity_data_bind)
 
         binding.user = User(18,"Test","User")
-//        binding.user.firstName = "hello world!"
+
+
+
+        btn_click.setOnClickListener {
+            binding.user = User((Math.random()*15).toInt(),"哈哈哈哈","哈哈哈哈lastalast")
+        }
     }
 }

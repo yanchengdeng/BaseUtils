@@ -23,6 +23,7 @@ import com.umeng.commonsdk.utils.UMUtils
 import deng.yc.baseutils.coroutine.CoroutineActivity
 import deng.yc.baseutils.databind.DataBindActivity
 import deng.yc.baseutils.livedata.LiveDataActivity
+import deng.yc.baseutils.room.RoomActivity
 import deng.yc.baseutils.viewbind.ViewBindActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
@@ -108,6 +109,10 @@ class MainActivity : AppCompatActivity() {
             ActivityUtils.startActivity(CoroutineActivity::class.java)
         }
 
+
+        room.setOnClickListener {
+            ActivityUtils.startActivity(RoomActivity::class.java)
+        }
 
         var channel = ChannelUtil.getChannel(this, "未知")
 

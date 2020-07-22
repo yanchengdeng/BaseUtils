@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -14,42 +15,61 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
 
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    viewBinding {
-        enabled = true
-    }
-
-
-    dataBinding {
-        enabled = true
-    }
-
-    signingConfigs {
-        release {
-            storeFile file("xyzx_0503.jks")
-            storePassword "Ddzx2016...xyzx"
-            keyAlias "xyzx"
-            keyPassword "Ddzx2016...xyzx"
+        // used by Room, to test migrations
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
         }
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+
+    // used by Room, to test migrations
+    sourceSets {
+        androidTest.assets.srcDirs +=
+                files("$projectDir/schemas".toString())
+    }
+
+
+
+compileOptions {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+kotlinOptions {
+    jvmTarget = "1.8"
+}
+viewBinding {
+    enabled = true
+}
+
+
+dataBinding {
+    enabled = true
+}
+
+signingConfigs {
+    release {
+        storeFile file("xyzx_0503.jks")
+        storePassword "Ddzx2016...xyzx"
+        keyAlias "xyzx"
+        keyPassword "Ddzx2016...xyzx"
     }
 }
+
+buildTypes {
+    release {
+        minifyEnabled false
+        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+}
+}
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -68,7 +88,7 @@ dependencies {
     implementation 'com.blankj:utilcode:1.24.7'
 
     implementation "com.umeng.umsdk:common:9.1.0"
-    implementation  'com.umeng.umsdk:asms:1.1.3' // asms包依赖(必选)
+    implementation 'com.umeng.umsdk:asms:1.1.3' // asms包依赖(必选)
     implementation 'com.umeng.umsdk:crash:0.0.4' // native crash包依赖(必选)
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
@@ -80,5 +100,19 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+
+
+    //room  sqlite
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
+    //需要添加该引用  才可以生成类似  UserDAO_Impl     CRUD查找类  ，否则会报cannot find  database_imp
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    //kotlin  需要加入
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+
+
 
 }
