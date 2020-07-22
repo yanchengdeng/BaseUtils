@@ -32,6 +32,15 @@
 
 
         <Button
+            android:id="@+id/ui_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="@string/ui_action" />
+
+
+        <Button
             android:id="@+id/play_mp3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -114,5 +114,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
 
 
+    //svg 动画
+    implementation 'com.jaredrummler:animated-svg-view:1.0.6'
+
+
 
 }

@@ -93,6 +93,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        ui_action.setOnClickListener {
+            ActivityUtils.startActivity(WelcomeActivity::class.java)
+        }
+
 
 
         live_data.setOnClickListener {
