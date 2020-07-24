@@ -1,13 +1,14 @@
 package deng.yc.baseutils.livedata
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.*
 import deng.yc.baseutils.R
+import deng.yc.baseutils.room.User
+import deng.yc.baseutils.room.UsersDatabase
 import kotlinx.android.synthetic.main.activity_live_data.*
-import kotlin.random.Random
+import kotlinx.coroutines.launch
 
 /**
  *
@@ -26,27 +27,105 @@ import kotlin.random.Random
 class LiveDataActivity : AppCompatActivity() {
 
     // from the activity-ktx artifact
-    private val model : NameViewModel by viewModels()
+    private lateinit var model : NameViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_data)
 
-        val nameObserver = Observer<String>{
-            tv_name.text = it.toString()
+
+        lifecycleScope.launch {
 
         }
 
-        model.currentName.observe(this,nameObserver)
+        model =  NameViewModel(UsersDatabase.getInstance(this).userDao())
 
 
+        model.currentName.observe(this,Observer {
+            tv_name.text = it.toString()
+
+        })
+
+
+        model.findUsers().observe(this,Observer<List<User>> {
+            tv_contents.text = it.joinToString { item ->"用户信息 \n $item \n"  }
+        })
+
+
+
+        Transformations.map(model.findUsers()){
+            user -> "${user.get(0)}"
+        }
+
+        val modles =model.findUser("23")
+
+
+        val stringLiveData = Transformations.map(
+            modles
+        ) { user: User -> user.mUserName + user.nickname }
 
         btn_click.setOnClickListener {
             val datas = (Math.random()*1000).toInt().toString()
-            model.currentName.postValue(datas )
+            //
+//            model.currentName.postValue(datas )
+            /***
+             * 您必须调用 setValue(T) 方法以从主线程更新 LiveData 对象。
+             * 如果在 worker 线程中执行代码，则您可以改用 postValue(T) 方法来更新 LiveData 对象。
+             */
+            model.currentName.value = "你好世界"
 
-            tv_contents.text = model.currentName.value
+            Thread.currentThread().name
+
+//            tv_contents.text = model.currentName.value
         }
+
+        bnt_add_user.setOnClickListener {
+            model.addUser(User(mUserName = "一个小孩",nickname = "心儿"))
+        }
+
+
+
+
+
+        //测试   Transformations
+        val  strLivedata= MutableLiveData<String>()
+
+        strLivedata.value = "hha fs"
+
+        val addStr : LiveData<String> =Transformations.map(strLivedata, ::yourFun)
+
+
+
+
+
+        val listDatas = listOf("A","B","C","d","f")
+      val mapsDatas =   listDatas.map {
+            it.toUpperCase()
+        }
+
+        /**
+         * 双引号 表示 直接可以引用一个function 作为参数
+         */
+        println(listDatas.mapIndexedNotNull(::mapindexFuction))
+
+
+
+        println(listDatas)
+        println(mapsDatas)
+
+
     }
+
+
+    private fun mapindexFuction(index :Int,str: String) : String{
+        return "$index + $str"
+    }
+
+    private fun yourFun(str:String)="新${str}被添加到数据库中"
+
+
+
+
+
 
 
 }

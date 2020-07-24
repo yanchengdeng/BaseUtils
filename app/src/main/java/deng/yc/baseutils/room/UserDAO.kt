@@ -1,5 +1,6 @@
 package deng.yc.baseutils.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 /**
@@ -14,7 +15,7 @@ import androidx.room.*
 interface UserDAO {
 
     @Query("SELECT * FROM users")
-    fun getUsers():List<User>
+    fun getUsers():LiveData<List<User>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -22,7 +23,7 @@ interface UserDAO {
 
 
     @Query("select * from users where username = :name")
-    fun getUserById(name: String): List<User>
+    fun getUserById(name: String): LiveData<User>
 
 
     @Query("DELETE  FROM users")

@@ -95,6 +95,16 @@
             android:text="room数据库" />
 
 
+        <Button
+            android:id="@+id/workmanager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:text="WorkManager" />
+
+
+
 
     </LinearLayout>
 

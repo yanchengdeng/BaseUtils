@@ -16,18 +16,23 @@ import kotlin.random.Random
 *@Time : 16:24
 *@Describe ：数据绑定
 **/
-class DataBindActivity : AppCompatActivity() {
+class DataBindActivity : BaseDataBindActivity<ActivityDataBindBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityDataBindBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_data_bind)
+//        val binding = DataBindingUtil.setContentView<ActivityDataBindBinding>(
+//            this, R.layout.activity_data_bind)
 
-        binding.user = User(18,"Test","User")
-
+        ( dataBind as ActivityDataBindBinding).user = User(18,"Test","User")
+        dataBind?.lifecycleOwner = this
 
 
         btn_click.setOnClickListener {
-            binding.user = User((Math.random()*15).toInt(),"哈哈哈哈","哈哈哈哈lastalast")
+            ( dataBind as ActivityDataBindBinding).user = User((Math.random()*15).toInt(),"哈哈哈哈","哈哈哈哈lastalast")
         }
+
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_data_bind
     }
 }

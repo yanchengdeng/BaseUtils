@@ -9,9 +9,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Base64
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ActivityUtils
@@ -25,6 +22,7 @@ import deng.yc.baseutils.databind.DataBindActivity
 import deng.yc.baseutils.livedata.LiveDataActivity
 import deng.yc.baseutils.room.RoomActivity
 import deng.yc.baseutils.viewbind.ViewBindActivity
+import deng.yc.baseutils.workmanager.WorkManagerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 
@@ -117,6 +115,13 @@ class MainActivity : AppCompatActivity() {
         room.setOnClickListener {
             ActivityUtils.startActivity(RoomActivity::class.java)
         }
+
+        workmanager.setOnClickListener {
+            ActivityUtils.startActivity(WorkManagerActivity::class.java)
+        }
+
+
+
 
         var channel = ChannelUtil.getChannel(this, "未知")
 
@@ -218,6 +223,9 @@ class MainActivity : AppCompatActivity() {
 
         println(" dyc ${Thread.currentThread()} 的id : ${Thread.currentThread().id}")
         println("dyc ${Thread.currentThread()} 的名称： ${Thread.currentThread().name}")
+
+        (Thread.currentThread().isAlive)
+
     }
 
     override fun onResume() {

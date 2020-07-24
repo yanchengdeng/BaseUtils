@@ -36,7 +36,7 @@ class RoomActivity : AppCompatActivity() {
             //添加一条数据
             val listDatas = dao.getUserById(et_name.editableText.toString())
 
-            tv_contents.text = listDatas.joinToString { "用户信息 \n $it \n" }
+            tv_contents.text = listDatas.value?.toString()
 
         }
 
@@ -54,6 +54,7 @@ class RoomActivity : AppCompatActivity() {
 
     private fun setTextContents() {
         val listDatas = dao.getUsers()
-        tv_contents.text = listDatas.joinToString { "用户信息:\n $it \n" }
+        //fixme  这里的  liveData 。value 无数据
+        tv_contents.text = listDatas.value?.joinToString { "用户信息:\n $it \n" }
     }
 }
