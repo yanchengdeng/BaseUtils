@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".workmanager.WorkManagerActivity"></activity>
+        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".OpenWebViewActivity" />
+        <activity android:name=".workmanager.WorkManagerActivity" />
         <activity android:name=".databind.BaseDataBindActivity" />
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".room.RoomActivity" />

@@ -41,5 +41,6 @@ ext {
     roomVersion = '2.2.5'
     koin_version = '2.1.6'
     work_version = "2.3.4"
+    retrofit_version = "2.9.0"
 
 }

@@ -32,11 +32,27 @@
         tools:layout_editor_absoluteY="130dp" />
 
     <Button
+        android:id="@+id/job_launch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Job"
         tools:layout_editor_absoluteX="254dp"
         tools:layout_editor_absoluteY="222dp" />
+
+
+    <Button
+        android:id="@+id/job_launch_life"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Job跟随声明周期"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="222dp" />
+
+    <Button
+        android:id="@+id/viewmodle_life"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="跟随viewModel声明周期" />
 
 
 </LinearLayout>

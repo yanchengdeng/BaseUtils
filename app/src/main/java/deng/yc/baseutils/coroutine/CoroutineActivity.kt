@@ -2,21 +2,37 @@ package deng.yc.baseutils.coroutine
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import deng.yc.baseutils.DataUrl.Companion.datas
+import androidx.lifecycle.lifecycleScope
 import deng.yc.baseutils.R
+import deng.yc.baseutils.Response
+import deng.yc.baseutils.service
 import kotlinx.android.synthetic.main.activity_coroutine.*
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
+import java.util.*
 
 /**
- *  Todo
+ *
  *  继续研究下  协程并没跟随activity 销毁而 销毁
  */
 class CoroutineActivity : AppCompatActivity() {
 
+
+    private lateinit var  moviesViewModel :MovieViewModel
+
+    lateinit var job: Job
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coroutine)
+
+
+        job = Job()
+
+        moviesViewModel = MovieViewModel()
+
+        moviesViewModel.movieTypes.observe(this, androidx.lifecycle.Observer {
+
+            textView.text = it.data.toString()
+        })
 
 
         /**
@@ -53,7 +69,54 @@ class CoroutineActivity : AppCompatActivity() {
 
 
 
+        job_launch.setOnClickListener {
+            runBlocking {
+            val job = GlobalScope.launch {
+                delay(5000)
+                println("kotlin....coroutines")
+            }
 
+            println("hello... ")
+            job.join()
+             println("world....")
+
+            }
+        }
+
+        job_launch_life.setOnClickListener {
+
+            CoroutineScope(job).launch {
+                val job = GlobalScope.launch {
+                    println("start---${Date()}")
+                 val result =    getData()
+                    if (result.errorCode==0){
+                        println(result.data)
+                    }
+                    println("end--${Date()}")
+                    println("kotlin....coroutines---job")
+                }
+
+                println("hello...job ")
+                job.join()
+                println("world....job")
+
+            }
+        }
+
+
+        viewmodle_life.setOnClickListener {
+            GlobalScope.launch{
+                moviesViewModel.getMovieTypes()
+            }
+        }
+    }
+
+
+    private suspend fun getData() :Response{
+
+//        delay(5000)
+
+      return service.listRepos()
 
     }
 
@@ -79,6 +142,7 @@ class CoroutineActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        job.cancel()
     }
 
 }

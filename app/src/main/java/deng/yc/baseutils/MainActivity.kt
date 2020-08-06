@@ -87,7 +87,8 @@ class MainActivity : AppCompatActivity() {
 
 
         view_bind.setOnClickListener {
-            ActivityUtils.startActivity(ViewBindActivity::class.java)
+//            ActivityUtils.startActivity(ViewBindActivity::class.java)
+            ActivityUtils.startActivity(OpenWebViewActivity::class.java)
         }
 
 
